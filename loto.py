@@ -18,7 +18,7 @@ class Player:
             line.insert(random.randint(0, 7), ' ')
 
     def take_card(self):
-        print('{:-^26}'.format(' Карточка'+ self.name))
+        print('{:-^26}'.format(' Карточка игрока '+ self.name))
         for line1 in self.numbers_line:
             for number1 in line1:
                 print('{0:>2}'.format(number1), end=' ')
