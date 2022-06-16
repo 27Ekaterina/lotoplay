@@ -8,9 +8,19 @@ class Bag:
         self.ballsleft = 90
         self.balls = random.sample(range(1, 91), 90)
 
-    def take_ball(self):
-        result = random.choice(self.balls)
-        return result
+    def __contains__(self, ball):
+        return ball in self.balls
+
+
+    def __str__(self):
+        return f'осталось в мешке: {self.ballsleft}'
+        # return f'в мешке {self.balls}'
+
+    def __eq__(self, other):
+        # Сравнение по порядку чисел
+        return self.balls == other.balls
+        # Сравнение по длине
+        # return len(self.balls) == len(other.balls)
 
 class Card:
     def __init__(self, name):
@@ -25,6 +35,10 @@ class Card:
             line.insert(random.randint(0, 6), ' ')
             line.insert(random.randint(0, 7), ' ')
 
+    def __eq__(self, other):
+        # Числа в карточке одного игрока не равны числам в карточке другого игрока
+        return self.numbers_card != other.numbers_card
+
     def __str__(self):
         return '><' if self.cross_number_comp else self.numbers_line
 
@@ -33,7 +47,6 @@ class Card:
             for number1 in line1:
                 print('{0:>2}'.format(number1), end=' ')
             print()
-
 
     def cross_number_comp(self, ball):
         if ball in self.numbers_card:
@@ -84,6 +97,9 @@ class Player:
     def __str__(self):
         return str(self.name)
 
+    def __eq__(self, other):
+        return self.name == other.name
+
     def move(self, ball):
         while True:
             a = input('Зачеркнуть цифру? (y/n): ')
@@ -109,3 +125,20 @@ def create_player(name, type_player, card):
     }
     player = players[type_player](name, card)
     return player
+
+
+if __name__ == "__main__":
+
+    first_bag = Bag()
+    second_bag = Bag()
+    print(first_bag == second_bag)
+
+    name = "ivan"
+    name1 = "kate"
+    first_card = Card(name)
+    second_card = Card(name1)
+    print(first_card == second_card)
+
+    first_player = Player(name, first_card)
+    second_player = Player(name1, second_card)
+    print(first_player != second_player)

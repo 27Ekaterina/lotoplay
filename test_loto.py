@@ -7,6 +7,7 @@ class TestBag:
 
     def setup(self):
         self.balls = random.sample(range(1, 4), 3)
+        self.ballsleft = 3
 
     def test_balls(self):
         assert len(self.balls) == 3
@@ -18,6 +19,14 @@ class TestBag:
         assert result in self.balls
         assert result == 1 or 2 or 3
 
+    def test_str(self):
+        bag = str(Bag())
+        assert bag[0:18] == 'осталось в мешке: '
+
+    def test_eq(self):
+        other = Bag()
+        assert self.balls != other.balls
+
 class TestCard:
 
     def setup(self, kate):
@@ -28,9 +37,15 @@ class TestCard:
         for i in self.card.numbers_card:
             assert i in range(1, 91)
 
+    def test_eq(self):
+        name = "ivan"
+        other = Card(name)
+        assert self.card.numbers_card != other.numbers_card
+
+    def test_str(self):
+        assert "><" in str(self.card)
 
     def test_cross_number_comp(self):
-        assert "><" in str(self.card)
         assert "&" not in str(self.card)
         self.card.cross_number_comp(1)
         self.card.cross_number_comp(2)
@@ -82,13 +97,18 @@ class TestPlayer:
         self.card = Card(kate)
         self.player = Player(self.name, self.card)
 
-
     def test_init(self):
         assert len(self.player.card.numbers_card) == 15
 
     def test_str(self):
         result = "kate"
         assert result == str(self.player.name)
+
+    def test_eq(self):
+        name = "ivan"
+        card = Card(name)
+        other = Player(name, card)
+        assert self.player.name != other.name
 
 class TestCompPlayer:
 
