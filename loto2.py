@@ -5,7 +5,6 @@ players_person = []
 player_card = None
 bag = Bag()
 balls = bag.balls
-ball = bag.take_ball()
 
 while True:
     try:
@@ -19,7 +18,8 @@ while True:
 
         for ball in balls:
             bag.ballsleft -= 1
-            print('\nНовый бочонок: {} (осталось: {})\n'.format(ball, bag.ballsleft))
+            print('\nНовый бочонок: {},'.format(ball), bag)
+
 
             for name in players_person:
                 print('{:-^26}'.format(' Карточка ' + name.card.name))
